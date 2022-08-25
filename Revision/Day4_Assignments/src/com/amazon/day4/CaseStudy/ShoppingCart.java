@@ -70,11 +70,13 @@ public class ShoppingCart {
             System.out.println("Product Name "+temp.productName);
             System.out.println("Product Price "+temp.productPrice);
             finalPrice += temp.productPrice;
+            temp = temp.nextProduct;
             }
         //For last item
         System.out.println("Product ID "+temp.productID);
         System.out.println("Product Name "+temp.productName);
         System.out.println("Product Price "+temp.productPrice);
+        finalPrice += temp.productPrice;
 
         System.out.println("Total Number of products: "+size);
         System.out.println("Final Price: "+finalPrice);

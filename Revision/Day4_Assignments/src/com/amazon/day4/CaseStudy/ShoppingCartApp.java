@@ -20,7 +20,7 @@ public class ShoppingCartApp {
         productName = scanner.nextLine();
 
         System.out.println("Enter Product ID");
-        productID = scanner.nextLine();
+        productID = scanner.next();
 
         System.out.println("Enter Product Price");
         productPrice = scanner.nextDouble();
@@ -31,7 +31,7 @@ public class ShoppingCartApp {
         productName = scanner.next();
 
         System.out.println("Enter Product ID");
-        productID = scanner.nextLine();
+        productID = scanner.next();
 
         System.out.println("Enter Product Price");
         productPrice = scanner.nextDouble();
@@ -42,7 +42,7 @@ public class ShoppingCartApp {
         productName = scanner.next();
 
         System.out.println("Enter Product ID");
-        productID = scanner.nextLine();
+        productID = scanner.next();
 
         System.out.println("Enter Product Price");
         productPrice = scanner.nextDouble();

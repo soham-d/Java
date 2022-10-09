@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="940b0be9-24f8-4435-9cda-40420674122d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Revision/FileHandling/src/com/amazon/atlas22/fileio/CopyFileContentsApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/FileHandling/src/com/amazon/atlas22/fileio/FIleIO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/FileHandling/src/com/amazon/atlas22/fileio/FileDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/FileHandling/src/com/amazon/atlas22/fileio/FileIOApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/FileHandling/src/com/amazon/atlas22/fileio/student.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/MyPractice/com.amazon.atlas22.linkedlists/model/src/LinkedList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/MyPractice/com.amazon.atlas22.linkedlists/model/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/MyPractice/com.amazon.atlas22.linkedlists/model/src/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/MyPractice/com.amazon.atlas22.linkedlists/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Practice2/src/com/amazon/LinkedLists/DataStructures/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Practice2/src/com/amazon/LinkedLists/LinkedListApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Practice2/src/com/amazon/LinkedLists/LinkedLists.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session 19/src/Assignment1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session 19/src/OpenClosePrinciple.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session 19/src/PrimeUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session 19/src/SingleResponsibilityPrinciple.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session 19/src/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session17/src/KnapSackBruteForceApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session17/src/KnapSackGreedyAlgoApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/Builder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/AbstractFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/Factory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/MySQLDB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/ProductAbstractFatoryAssignment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/SingletonEager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/SingletonLazy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/SingletonLazyMultiThreading.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/Session20/src/com/amazon/atlas22/creational/SingletonWithBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/examples/src/HelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/examples/src/ProductApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/examples/src/Products.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/session18/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/sessionSep2/src/ParkingTicket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Revision/sessionSep2/src/ParkingTicketSetApp.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2FCSYO3sRuvTOJTM4HOykxtWZH5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="940b0be9-24f8-4435-9cda-40420674122d" name="Changes" comment="" />
+      <created>1663994622020</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1663994622020</updated>
+      <workItem from="1663994623255" duration="126000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

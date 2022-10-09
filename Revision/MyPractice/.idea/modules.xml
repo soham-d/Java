@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyPractice.iml" filepath="$PROJECT_DIR$/MyPractice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.amazon.atlas22.linkedlists/com.amazon.atlas22.linkedlists.iml" filepath="$PROJECT_DIR$/com.amazon.atlas22.linkedlists/com.amazon.atlas22.linkedlists.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.amazon.atlas22.linkedlists/model/model.iml" filepath="$PROJECT_DIR$/com.amazon.atlas22.linkedlists/model/model.iml" />
+    </modules>
+  </component>
+</project>

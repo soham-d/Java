@@ -72,7 +72,7 @@ public class RailwayCrossing {
 
         String crossingStatus = (status ==1)?"OPEN":"CLOSE";
         String railwayCrossingText = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"+
-                                     "Crossing Name: "+name+"\n"+
+                                     "Crossing Name: "+name+"\n"+                                     "Crossing Name: "+name+"\n"+
                                      "Crossing Address: "+address+"\n"+
                                      "Crossing Status: "+crossingStatus+"\n"+
                                      "Crossing Person In-Charge: "+personInCharge.getName()+"\n"+

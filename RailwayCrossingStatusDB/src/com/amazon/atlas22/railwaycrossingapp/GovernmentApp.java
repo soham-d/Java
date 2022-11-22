@@ -1,11 +1,11 @@
 package com.amazon.atlas22.railwaycrossingapp;
 
 import com.amazon.atlas22.railwaycrossingapp.controller.RailwayCrossingController;
-import com.amazon.atlas22.railwaycrossingapp.controller.UserController;
+import com.amazon.atlas22.railwaycrossingapp.db.DB;
 import com.amazon.atlas22.railwaycrossingapp.model.RailwayCrossing;
 import com.amazon.atlas22.railwaycrossingapp.model.User;
 
-import java.sql.SQLOutput;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,40 +14,38 @@ public class GovernmentApp {
     RailwayCrossingController controller;
     Scanner scanner;
 
-    GovernmentApp(){
+    DB db = DB.getInstance();
+
+    GovernmentApp() throws ClassNotFoundException, SQLException {
         controller = RailwayCrossingController.getInstance();
         scanner = new Scanner(System.in);
         startGovernmentApp();
     }
 
     void listCrossings(){
-        Map<String, RailwayCrossing> crossings = (Map<String, RailwayCrossing>) controller.fetchCrossings();
-        for(String key : crossings.keySet()){
-            System.out.println(crossings.get(key));
-            System.out.println("--------------------------");
-        }
+
+        //List crossings from Data Structure
+//        Map<String, RailwayCrossing> crossings = (Map<String, RailwayCrossing>) controller.fetchCrossings();
+//        for(String key : crossings.keySet()){
+//            System.out.println(crossings.get(key));
+//            System.out.println("--------------------------");
+//        }
+
+        //List crossings from DataBase
+        db.retrieveCrossingsFromDB();
+
 
     }
 
     void searchCrossings(){
 
         scanner.nextLine(); // Empty Nextline for scanner issue
-
         System.out.println("Enter the name of crossing...");
         String searchKeyCrossing = scanner.nextLine();
-
-        Map<String, RailwayCrossing> crossings = (Map<String, RailwayCrossing>) controller.fetchCrossings();
-        for(String key : crossings.keySet()){
-            if(crossings.get(key).equals(searchKeyCrossing)) {
-
-                System.out.println(crossings.get(key));
-                System.out.println("--------------------------");
-            }
-        }
-
+        db.searchCrossingInDB(searchKeyCrossing);
     }
 
-    void addCrossing(){
+    void addCrossing() throws ClassNotFoundException {
 
         scanner.nextLine(); // Empty next line for scanner issue
 
@@ -90,7 +88,7 @@ public class GovernmentApp {
         }
     }
 
-    void deleteCrossing(){
+    void deleteCrossing() throws ClassNotFoundException, SQLException {
 
         scanner.nextLine(); // Empty Nextline for scanner issue
 
@@ -98,18 +96,28 @@ public class GovernmentApp {
 
         String deleteKeyCrossing = scanner.nextLine();
 
-        Map<String, RailwayCrossing> crossings = (Map<String, RailwayCrossing>) controller.fetchCrossings();
-        for(String key : crossings.keySet()){
-            if(crossings.get(key).equals(deleteKeyCrossing)) {
-                crossings.remove(crossings.get(key).getName());
-            }
-        }
-        System.out.println("Crossing "+deleteKeyCrossing+" deleted successfully...");
+        db.deleteCrossingDB(deleteKeyCrossing);
+
+//
+//
+//        //Delete crossing from HashMap
+//        Map<String, RailwayCrossing> crossings = (Map<String, RailwayCrossing>) controller.fetchCrossings();
+//        for(String key : crossings.keySet()){
+//            if(crossings.get(key).equals(deleteKeyCrossing)) {
+//                crossings.remove(crossings.get(key).getName());
+//            }
+//        }
+//
+//        //Delete crossing from DataBase
+//        if(db.deleteDB(crossings.get(deleteKeyCrossing))){
+//            System.out.println("Crossing deleted successfully from the Database");
+//        }
+//        //System.out.println("Crossing "+deleteKeyCrossing+" deleted successfully...");
     }
 
 
 
-    void login(){
+    void login() throws ClassNotFoundException, SQLException {
 
         User user = new User();
         //scanner.nextLine(); //Empty Nextline for scanner issue.
@@ -131,12 +139,12 @@ public class GovernmentApp {
 
 
         }else{
-            System.err.println("Something went worng, Please try again");
+            System.err.println("Something went wrong, Please try again");
         }
 
     }
 
-    void home(){
+    void home() throws ClassNotFoundException, SQLException {
 
         while(true) {
             System.out.println("=========================================");
@@ -174,12 +182,12 @@ public class GovernmentApp {
                     break;
                 case 5:
                     // Export Data to files
-                    controller.exportData();
+                    //controller.exportData();
+                    db.exportFromDB();
                     break;
                 case 6:
                     // Import Data from files
-
-                    controller.importData();
+                    db.importFromCSV();
                     break;
                 case 7:
                     // Close application
@@ -196,7 +204,7 @@ public class GovernmentApp {
             }
         }
     }
-    void startGovernmentApp() {
+    void startGovernmentApp() throws ClassNotFoundException, SQLException {
 
         System.out.println("=========================================");
         System.out.println("Welcome User");

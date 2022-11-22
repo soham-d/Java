@@ -41,12 +41,12 @@ public class RailwayCrossingController {
         return false;
     }
 
-    public boolean addOrUpdateCrossing(RailwayCrossing crossing){
-        return db.set(crossing);
+    public boolean addOrUpdateCrossing(RailwayCrossing crossing) throws ClassNotFoundException {
+        return db.set(crossing)&&db.setDB(crossing);
     }
 
-    public boolean deleteCrossing(RailwayCrossing crossing){
-        return db.delete(crossing);
+    public boolean deleteCrossing(RailwayCrossing crossing) throws ClassNotFoundException {
+        return db.delete(crossing) && db.deleteDB(crossing);
     }
 
     public Map<String, ?> fetchCrossings(){
@@ -58,7 +58,7 @@ public class RailwayCrossingController {
     }
 
     public void exportData(){
-        db.exportData();
+        db.exportFromDB();
     }
 
     public void importData(){

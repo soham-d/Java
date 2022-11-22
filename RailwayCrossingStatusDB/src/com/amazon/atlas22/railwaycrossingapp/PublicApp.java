@@ -14,14 +14,14 @@ public class PublicApp {
     RailwayCrossingController railController;
     Scanner scanner;
 
-    PublicApp(){
+    PublicApp() throws ClassNotFoundException {
         controller = UserController.getInstance();
         railController = RailwayCrossingController.getInstance();
         scanner = new Scanner(System.in);
         startPublicApp();
     }
 
-    void register(){
+    void register() throws ClassNotFoundException {
         User user = new User();
 
         scanner.nextLine(); //Empty Nextline for scanner issue.
@@ -199,7 +199,7 @@ public class PublicApp {
             }
         }
     }
-    void startPublicApp() {
+    void startPublicApp() throws ClassNotFoundException {
 
         System.out.println("=========================================");
         System.out.println("Welcome User");

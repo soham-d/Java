@@ -1,9 +1,10 @@
 package com.amazon.atlas22.railwaycrossingapp;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class RailwayCrossingApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
         while(true) {
             System.out.println("=========================================");
@@ -11,6 +12,7 @@ public class RailwayCrossingApp {
             System.out.println("1. End User App");
             System.out.println("2. Government App");
             System.out.println("3. Close App");
+
 
             System.out.println("=========================================");
 

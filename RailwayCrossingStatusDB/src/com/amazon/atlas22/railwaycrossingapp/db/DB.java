@@ -2,13 +2,15 @@ package com.amazon.atlas22.railwaycrossingapp.db;
 
 import com.amazon.atlas22.railwaycrossingapp.model.RailwayCrossing;
 import com.amazon.atlas22.railwaycrossingapp.model.User;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBaseBuilder;
+import com.opencsv.CSVReaderBuilder;
 
+import javax.sound.midi.Soundbank;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DB implements DAO{
@@ -63,76 +65,7 @@ public class DB implements DAO{
         set(user1);
         set(user2);
 
-        try {
-
-            // 1. Load the Driver
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            System.out.println("1. Driver Loaded...");
-
-            String url = "jdbc:sqlserver://localhost:1433;" +
-                    "databaseName=sample; user=java2;password=java; integratedSecurity=false;" +
-                    "encrypt=true;trustServerCertificate=true";
-
-
-            // 2. Create the Connection
-            Connection connection = DriverManager.getConnection(url);
-            System.out.println("2. Connection Created..");
-
-            // 3. Execute SQL Statement
-            String sql = "insert into users(user_name,password,user_type) values (, 'pass123', 1);
-            //String sql = "DELETE FROM Customer WHERE cid = 10";
-            //String sql = "UPDATE Customer SET name = 'Mike M', cashBack = 593 WHERE cid = 12";
-
-            //String sql = "SELECT * FROM Customer";
-
-            //Statement statement = connection.createStatement();
-
-			/*
-			// executeUpdate method is used for Insert, Update and Delete
-			int i = statement.executeUpdate(sql);
-			if(i > 0) {
-				System.out.println("3. SQL Statement Executed..");
-			}else {
-				System.out.println("3. SQL Statement Failed...");
-			}
-			*/
-
-            // executeQuery -> works with Select Statement
-			/*ResultSet set = statement.executeQuery(sql);
-
-			while(set.next()) {
-				System.out.print(set.getInt("cid")+"\t");
-				System.out.print(set.getString("name")+"\t");
-				System.out.print(set.getString("phone")+"\t");
-				System.out.print(set.getString("email")+"\t");
-				System.out.print(set.getInt("cashBack")+"\t");
-				System.out.println();
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			}*/
-
-
-            String sql = "INSERT INTO Customer (name, phone, email, cashBack) VALUES (?, ?, ?, ?)";
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, "Pam");
-            statement.setString(2, "+91 80808 30303");
-            statement.setString(3, "pam@example.com");
-            statement.setInt(4, 375);
-
-            int i = statement.executeUpdate();
-            if(i > 0) {
-                System.out.println("3. SQL Statement Executed..");
-            }else {
-                System.out.println("3. SQL Statement Failed...");
-            }
-
-            //4. Close the Connection
-            connection.close();
-            System.out.println("4. Connection Closed..");
-
-        } catch (Exception e) {
-            System.out.println("Something Went Wrong: "+e);
-        }
+        //code to fetch admins from DB here
 
     }
 
@@ -145,6 +78,76 @@ public class DB implements DAO{
         }else{
             RailwayCrossing crossing = (RailwayCrossing) object;
             crossings.put(crossing.getPersonInCharge().getEmail(), crossing);
+            return true;
+        }
+
+    }
+
+
+    public boolean setDB(Object object) throws ClassNotFoundException {
+        try {
+            // 1. Load the Driver
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //System.out.println("1. Driver Loaded...");
+            String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+            // 2. Create the Connection
+            Connection connection = DriverManager.getConnection(url);
+            //System.out.println("2. Connection Created..");
+
+            if(object instanceof User) {
+                // 3. Execute SQL Statement
+                User user = (User) object;
+
+                String sql = "INSERT INTO users (user_name,user_email,password,user_type) VALUES (?, ?, ?, ?)";
+
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, user.getName());
+                statement.setString(2, user.getEmail());
+                statement.setString(3, user.getPassword());
+                statement.setInt(4, 1);
+
+                // executeUpdate method is used for Insert, Update and Delete
+                int i = statement.executeUpdate();
+                if (i > 0) {
+                    System.out.println("User created successfully [IN DATABASE]");
+                } else {
+                    System.out.println("User creation failed [IN DATABASE]");
+                }
+                connection.close();
+                return true;
+            }else {
+                //railway crossing
+                // 3. Execute SQL Statement
+                RailwayCrossing crossing = (RailwayCrossing) object;
+
+                //insert into railway_crossings(crossing_name,crossingInchargeID, crossing_status, crossing_address, crossing_schedule)
+                //values ('Madhuban Colony','inc1@gov.in',1,'Madhuban Colony, Noida', '7:00, 8:34, 12:45, 15:33, 19:05, 21:01');
+
+                String sql = "INSERT INTO railway_crossings (crossing_name,crossingInchargeID, crossing_status, crossing_address, crossing_schedule) VALUES (?, ?, ?, ?,?)";
+
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, crossing.getName());
+                statement.setString(2, crossing.getPersonInCharge().getEmail());
+                statement.setInt(3, crossing.getStatus());
+                statement.setString(4, crossing.getAddress());
+                statement.setString(5,crossing.getSchedules().toString());
+
+                // executeUpdate method is used for Insert, Update and Delete
+                int i = statement.executeUpdate();
+                if (i > 0) {
+                    System.out.println("Railway Crossing created successfully");
+                } else {
+                    System.out.println("Railway crossing creation failed");
+                }
+                connection.close();
+
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Something Went Wrong: "+e);
             return true;
         }
 
@@ -162,12 +165,105 @@ public class DB implements DAO{
 
     }
 
+    public void deleteCrossingDB(String crossing_name) throws SQLException {
+        try {
+            // 1. Load the Driver
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //System.out.println("1. Driver Loaded...");
+            String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+            // 2. Create the Connection
+            Connection connection = DriverManager.getConnection(url);
+            //System.out.println("2. Connection Created..");
+            String sql = "delete from railway_crossings where crossing_name = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, crossing_name);
+
+            // executeUpdate method is used for Insert, Update and Delete
+            int i = statement.executeUpdate();
+            if (i > 0) {
+                System.out.println("Railway Crossing deleted successfully from DATABASE");
+            } else {
+                System.out.println("Railway crossing creation failed");
+            }
+            connection.close();
+
+
+        }catch (Exception e) {
+            System.out.println("Something Went Wrong: "+e);
+
+        }
+    }
+
+
+    public boolean deleteDB(Object object) throws ClassNotFoundException {
+        try {
+            // 1. Load the Driver
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //System.out.println("1. Driver Loaded...");
+            String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+            // 2. Create the Connection
+            Connection connection = DriverManager.getConnection(url);
+            //System.out.println("2. Connection Created..");
+
+            if(object instanceof User) {
+                // 3. Execute SQL Statement
+                User user = (User) object;
+
+                String sql = "delete from users where user_email = ?;";
+
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, user.getEmail());
+
+                // executeUpdate method is used for Insert, Update and Delete
+                int i = statement.executeUpdate();
+                if (i > 0) {
+                    System.out.println("User deleted successfully [IN DATABASE]");
+                } else {
+                    System.out.println("User deletion failed [IN DATABASE]");
+                }
+                connection.close();
+                return true;
+            }else {
+                //railway crossing
+                // 3. Execute SQL Statement
+                RailwayCrossing crossing = (RailwayCrossing) object;
+
+                String sql = "delete from railway_crossings where crossing_name = ?;";
+
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, crossing.getName());
+
+                // executeUpdate method is used for Insert, Update and Delete
+                int i = statement.executeUpdate();
+                if (i > 0) {
+                    System.out.println("Railway Crossing deleted successfully from DATABASE");
+                } else {
+                    System.out.println("Railway crossing creation failed");
+                }
+                connection.close();
+
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Something Went Wrong: "+e);
+            return true;
+        }
+
+    }
+
     public Map<String, ?> retrieve(Object object) {
         if(object instanceof User){
             return users;
         }else{
             return crossings;
         }
+
     }
 
     @Override
@@ -181,6 +277,98 @@ public class DB implements DAO{
         }
     }
 
+
+    public void retrieveCrossingsFromDB(){
+        try {
+            // 1. Load the Driver
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //System.out.println("1. Driver Loaded...");
+            String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+            // 2. Create the Connection
+            Connection connection = DriverManager.getConnection(url);
+            //System.out.println("2. Connection Created..");
+
+                //railway crossing
+
+            String sql = "SELECT * FROM railway_crossings";
+
+            Statement statement = connection.createStatement();
+
+
+            // executeQuery -> works with Select Statement
+			ResultSet set = statement.executeQuery(sql);
+
+            System.out.println("Crossing Name \t Crossing In-charge \t Crossing Status \t Crossing Address \t Crossing Schedule");
+            System.out.println();
+
+			while(set.next()) {
+                System.out.print(set.getString("crossing_name") + "\t\t");
+                System.out.print(set.getString("crossingInchargeID") + "\t\t");
+                System.out.print((set.getInt("crossing_status")==1)?"Open\t\t" : "Closed\t\t");
+                System.out.print(set.getString("crossing_address") + "\t\t");
+                System.out.print(set.getString("crossing_schedule") + "\t\t");
+                System.out.println();
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                //connection.close();
+            }
+            connection.close();
+
+
+        } catch (Exception e) {
+            System.out.println("Something Went Wrong: "+e);
+        }
+
+    }
+
+    public void searchCrossingInDB(String CrossingName){
+        try {
+            // 1. Load the Driver
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //System.out.println("1. Driver Loaded...");
+            String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+            // 2. Create the Connection
+            Connection connection = DriverManager.getConnection(url);
+            //System.out.println("2. Connection Created..");
+
+            //railway crossing
+
+            String sql = "SELECT * FROM railway_crossings where crossing_name = ?;";
+
+            //String sql = "delete from railway_crossings where crossing_name = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, CrossingName);
+
+
+            // executeQuery -> works with Select Statement
+
+            ResultSet set = statement.executeQuery();
+
+            if (!set.next()){
+                System.out.println("Crossing not found in DataBase");
+            }else {
+                System.out.println("Crossing found");
+                while (set.next()){
+                    System.out.print(set.getString("Crossing Name") + "\t");
+                    System.out.print(set.getString("Crossing In-Charge ID") + "\t");
+                    System.out.print(set.getString("Crossing Status") + "\t");
+                    System.out.print(set.getString("Crossing Address") + "\t");
+                    System.out.print(set.getInt("Crossing Schedule") + "\t");
+                    System.out.println();
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                }
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Something Went Wrong: "+e);
+        }
+
+    }
+
     public int getUserCount(){
         return users.size();
     }
@@ -189,30 +377,53 @@ public class DB implements DAO{
         return crossings.size();
     }
 
-    public void exportData(){
+    public void exportFromDB(){
 
-        try{
-            File file = new File(".\\users-data\\");
-            if(!file.exists()){
-                file.mkdir();
-                System.out.println("Directory created by the name of: "+file.getName());
+        String csvPath = "./export.csv";
+        try {
+            // 1. Load the Driver
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //System.out.println("1. Driver Loaded...");
+            String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+            // 2. Create the Connection
+            Connection connection = DriverManager.getConnection(url);
+            //System.out.println("2. Connection Created..");
+
+            //railway crossing
+
+            String sql = "SELECT * FROM railway_crossings";
+
+            Statement statement = connection.createStatement();
+
+            // executeQuery -> works with Select Statement
+
+            ResultSet set = statement.executeQuery(sql);
+            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(csvPath));
+
+            fileWriter.write("crossing_name,crossingInchargeID, crossing_status, crossing_address, crossing_schedule");
+
+            while(set.next()){
+                String crossingName = set.getString("crossing_name");
+                String crossingInchargeID = set.getString("crossingInchargeID");
+                Integer crossing_status = set.getInt("crossing_status");
+                String crossing_address = set.getString("crossing_address");
+                String crossing_schedule = set.getString("crossing_schedule");
+
+                String line = String.format("%s,%s,%d,%s,%s",crossingName, crossingInchargeID, crossing_status, crossing_address, crossing_schedule);
+
+                fileWriter.newLine();
+                fileWriter.write(line);
             }
-            for(String key: users.keySet()){
-                File userFile = new File(".\\users-data\\", key+".txt");
-                FileOutputStream stream = new FileOutputStream(file);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(stream);
-                objectOutputStream.writeObject(users.get(key));
-                System.out.println("User "+key+" Exported...");
+            System.out.println("Export Completed Successfully...");
+            statement.close();
+            connection.close();
+            fileWriter.close();
 
-            }
-
-            System.out.println("Export Finished Successfully...");
-
-        } catch (Exception e){
-            e.printStackTrace();
-
+        } catch (Exception e) {
+            System.out.println("Something Went Wrong, Export Failed: "+e);
         }
-
     }
 
     public void importData(){
@@ -240,4 +451,69 @@ public class DB implements DAO{
         }
 
     }
+
+    public void importFromCSV(){
+
+        //crossing_name	crossingInchargeID	 crossing_status	 crossing_address	 crossing_schedule
+
+        // read file
+
+        try{
+
+            File file = new File("./import.csv");
+            String[] files = file.list();
+
+            FileReader fileReader = new FileReader(file);
+
+            CSVReader csvReader = new CSVReaderBuilder(fileReader).withSkipLines(1).build();
+
+            List<String[]> allData = csvReader.readAll();
+
+            CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
+            String [] nextLine;
+            int lineNumber = 1;
+
+            // Extract data from CSV file
+            while ((nextLine = reader.readNext()) != null) {
+
+                try {
+
+                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+                    String url = "jdbc:sqlserver://localhost:1433;" +
+                    "databaseName=railwayApp; user=java2;password=java; integratedSecurity=false;" +
+                    "encrypt=true;trustServerCertificate=true";
+
+                    Connection connection = DriverManager.getConnection(url);
+
+                    //Prepare Query using preparedStatement()
+                    String sql = "INSERT INTO railway_crossings (crossing_name,crossingInchargeID, crossing_status, crossing_address, crossing_schedule) VALUES (?, ?, ?, ?,?)";
+
+                    PreparedStatement statement = connection.prepareStatement(sql);
+                    statement.setString(1, nextLine[0]);
+                    statement.setString(2, nextLine[1]);
+                    statement.setInt(3, Integer.parseInt(nextLine[2]));
+                    statement.setString(4, nextLine[3]);
+                    statement.setString(5, nextLine[4]);
+                        // executeUpdate method is used for Insert, Update and Delete
+                    int i = statement.executeUpdate();
+                    if (i > 0) {
+                        System.out.println("Row #"+lineNumber+" inserted");
+                    }
+                    connection.close();
+
+                }catch (Exception e){
+                    System.out.println("Something went wrong..."+e);
+                }
+
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+    }
+
+
 }
